@@ -1,52 +1,52 @@
 #!/usr/bin/python3
-"""Unittest module for the Place Class."""
+"""unit test for user classes."""
 
 import unittest
-from datetime import datetime
-import time
-from models.place import Place
-import re
-import json
 from models.engine.file_storage import FileStorage
+from models.user import User
 import os
-from models import storage
+import json
+from datetime import datetime
 from models.base_model import BaseModel
+from models.place import Place
 
 
 class TestPlace(unittest.TestCase):
-
-    """Test Cases for the Place class."""
-
-    def setUp(self):
-        """Sets up test methods."""
-        pass
+    """unit testing for test user"""
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
+        """tear"""
         pass
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def setUp(self):
+        """set up"""
+        pass
 
-    def test_8_instantiation(self):
-        """Tests instantiation of Place class."""
-
+    def test_instance_creation(self):
+        """test instance creation"""
         b = Place()
         self.assertEqual(str(type(b)), "<class 'models.place.Place'>")
         self.assertIsInstance(b, Place)
         self.assertTrue(issubclass(type(b), BaseModel))
 
-    def test_8_attributes(self):
-        """Tests the attributes of Place class."""
-        attributes = storage.attributes()["Place"]
-        o = Place()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(o, k))
-            self.assertEqual(type(getattr(o, k, None)), v)
+    def test_attribute(self):
+        """test correct attributes"""
+        b = Place()
+        attr_ = {"city_id": str,
+                 "user_id": str,
+                 "name": str,
+                 "description": str,
+                 "number_rooms": int,
+                 "number_bathrooms": int,
+                 "max_guest": int,
+                 "price_by_night": int,
+                 "latitude": float,
+                 "longitude": float,
+                 "amenity_ids": list}
+        for k, v in attr_.items():
+            self.assertTrue(hasattr(b, k))
+            self.assertEqual(type(getattr(b, k, None)), v)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -8,9 +8,10 @@ import os
 import json
 from datetime import datetime
 from models.base_model import BaseModel
+from models.city import City
 
 
-class TestUser(unittest.TestCase):
+class TestCity(unittest.TestCase):
     """unit testing for test user"""
 
     def tearDown(self):
@@ -23,18 +24,16 @@ class TestUser(unittest.TestCase):
 
     def test_instance_creation(self):
         """test instance creation"""
-        b = User()
-        self.assertEqual(str(type(b)), "<class 'models.user.User'>")
-        self.assertIsInstance(b, User)
+        b = City()
+        self.assertEqual(str(type(b)), "<class 'models.city.City'>")
+        self.assertIsInstance(b, City)
         self.assertTrue(issubclass(type(b), BaseModel))
 
     def test_attribute(self):
         """test correct attributes"""
-        b = User()
-        attr_ = {"email": str,
-                 "password": str,
-                 "first_name": str,
-                 "last_name": str}
+        b = City()
+        attr_ = {"state_id": str,
+                 "name": str}
         for k, v in attr_.items():
             self.assertTrue(hasattr(b, k))
             self.assertEqual(type(getattr(b, k, None)), v)
