@@ -4,6 +4,8 @@
 from models.base_model import BaseModel
 
 
-class Amenity(BaseModel):
+class Review(BaseModel):
     """Class representing a Amenity."""
-    name = ""
+    place_id = ""
+    user_id = ""
+    text = ""
