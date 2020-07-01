@@ -16,7 +16,56 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """if no command matches do_*
         """
-        self._precmd(line)
+        if not line:
+            return
+
+        if self.count_instances(line):
+            return
+
+        if not self.class_method_(line):
+            return
+
+        matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(all|show|destroy|create|all|update)\(([^,]*),?\s?([^,]*),?\s?([^,]*)\)', line)
+        if matches:
+            classes = matches.group(1)
+            command = matches.group(2)
+            id_ = matches.group(3)
+            att_ = matches.group(4)
+            att_value = matches.group(5)
+            self.onecmd(command + " " + classes + " " +  id_ + " " + att_ + " " + att_value)
+            return
+
+    def count_instances(self, line):
+        """count instances
+        """
+        matches = re.search(
+            r'(User|BaseModel|Place|City|Amenity|Review|State).(count)\(\)', line)
+        if matches:
+            count = 0
+            classes = matches.group(1)
+            for k, v in FileStorage._FileStorage__objects.items():
+                if classes in k:
+                    count = count + 1
+            print(count)
+            return 0
+        return 1
+
+    def class_method_(self, line):
+        """ <class>.<method>
+        """
+        matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(update)\(([^,]*),?\s?({.+})\)', line)
+        if matches:
+            classes = matches.group(1)
+            command = matches.group(2)
+            id_ = matches.group(3).strip("\"")
+            args_ = matches.group(4)
+            args_ = args_.replace("\'", "\"")
+            dict_ = json.loads(args_)
+            for k, v in dict_.items():
+                self.onecmd(command + " " + classes + " " + id_ + " " + str(k) + " " + str(v))
+            return 0
+        return 1
+
 
     def do_EOF(self, line):
         """what to do when findind EOF
@@ -127,6 +176,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         print(out_)
+    def do_shell(self, line):
+        """ run a shell command
+        """
+        output = os.popen(line).read()
+        self.last_output = output
 
     def do_update(self, line):
         """update the instances of a class.
