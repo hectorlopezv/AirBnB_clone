@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from models import storage
 import re
 import json
+import os
 
 
 class HBNBCommand(cmd.Cmd):
@@ -22,19 +23,29 @@ class HBNBCommand(cmd.Cmd):
         if self.count_instances(line):
             return
 
+        if not self.class_method_(line):
+            return
 
-        matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(all|show|destroy|create|all|update)\(([^,]*),?\s?([^,]*),?\s?([^,]*)\)', line)
+        matches = re.search(
+            r'(User|BaseModel|Place|City|Amenity|Review|State).(all|show|destroy|create|all|update)\(([^,]*),?\s?([^,]*),?\s?([^,]*)\)',
+            line)
         if matches:
             classes = matches.group(1)
             command = matches.group(2)
             id_ = matches.group(3)
             att_ = matches.group(4)
             att_value = matches.group(5)
-            self.onecmd(command + " " + classes + " " +  id_ + " " + att_ + " " + att_value)
+            self.onecmd(
+                command +
+                " " +
+                classes +
+                " " +
+                id_ +
+                " " +
+                att_ +
+                " " +
+                att_value)
             return
-        if not self.class_method_(line):
-            return
-
 
     def count_instances(self, line):
         """count instances
@@ -55,7 +66,9 @@ class HBNBCommand(cmd.Cmd):
         """ <class>.<method>
         """
         print("entro al update dict")
-        matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(update)\(([^,]*),?\s?({.+})\)', line)
+        matches = re.search(
+            r'(User|BaseModel|Place|City|Amenity|Review|State).(update)\(([^,]*),?\s?({.+})\)',
+            line)
         if matches:
             classes = matches.group(1)
             command = matches.group(2)
@@ -64,10 +77,18 @@ class HBNBCommand(cmd.Cmd):
             args_ = args_.replace("\'", "\"")
             dict_ = json.loads(args_)
             for k, v in dict_.items():
-                self.onecmd(command + " " + classes + " " + id_ + " " + str(k) + " " + str(v))
+                self.onecmd(
+                    command +
+                    " " +
+                    classes +
+                    " " +
+                    id_ +
+                    " " +
+                    str(k) +
+                    " " +
+                    str(v).strip('"'))
             return 0
         return 1
-
 
     def do_EOF(self, line):
         """what to do when findind EOF
@@ -117,7 +138,6 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-
         if not re.search(r'\w+-\w+-\w+-\w+-\w+', args_[1]):
             print("** no instance found **")
             return
@@ -130,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             with open("file.json", 'r') as f:
                 print(objects[key_search])
-        except:
+        except BaseException:
             pass
 
     def do_destroy(self, line):
@@ -169,19 +189,22 @@ class HBNBCommand(cmd.Cmd):
         """
         args_ = line.split(' ')
         if not line:
-            out_ = [v.__str__() for k,v in storage.all().items()]
+            out_ = [v.__str__() for k, v in storage.all().items()]
 
         elif args_[0] in storage.accepted_classes():
-            out_ = [ v.__str__() for k,v in storage.all().items() if args_[0] == type(v).__name__]
+            out_ = [v.__str__() for k, v in storage.all().items()
+                    if args_[0] == type(v).__name__]
 
         else:
             print("** class doesn't exist **")
             return
         print(out_)
+
     def do_shell(self, line):
         """ run a shell command
         """
         output = os.popen(line).read()
+        print(output)
         self.last_output = output
 
     def do_update(self, line):

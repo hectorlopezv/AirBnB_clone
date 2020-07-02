@@ -551,9 +551,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         for classname, cls in self.classes().items():
             uid = self.create_class(classname)
             for attr, value in self.test_random_attributes.items():
-                if type(value) is not str:
+                if not isinstance(value, str):
                     pass
-                quotes = (type(value) == str)
+                quotes = (isinstance(value, str))
                 self.help_test_update(classname, uid, attr,
                                       value, quotes, False)
                 self.help_test_update(classname, uid, attr,

@@ -2,6 +2,7 @@
 """Module for FileStorage class."""
 import json
 
+
 class FileStorage:
 
     """Class for serializtion and deserialization of base classes."""
@@ -22,7 +23,6 @@ class FileStorage:
         with open(self.__file_path, 'w') as f2:
             dict_ = {k: v.to_dict() for k, v in self.__objects.items()}
             json.dump(dict_, f2)
-
 
     def accepted_classes(self):
         """Returns a dictionary of valid classes and their references."""
@@ -48,7 +48,8 @@ class FileStorage:
         try:
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 dict_ = json.load(f)
-                dict_ = {k:classes[v["__class__"]](**v) for k,v in dict_.items()}
+                dict_ = {k: classes[v["__class__"]]
+                         (**v) for k, v in dict_.items()}
                 FileStorage._FileStorage__objects.update(dict_)
-        except:
+        except BaseException:
             pass

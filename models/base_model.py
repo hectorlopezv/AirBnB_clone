@@ -24,7 +24,6 @@ class BaseModel:
             self.created_at = datetime.fromisoformat(kwargs['created_at'])
             del self.__dict__["__class__"]
 
-
     def __str__(self):
         """Returns a human-readable string representation
         of an instance."""
