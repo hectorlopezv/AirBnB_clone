@@ -25,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
 
         matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(all|show|destroy|create|all|update)\(([^,]*),?\s?([^,]*),?\s?([^,]*)\)', line)
         if matches:
-            print("entro aquii")
             classes = matches.group(1)
             command = matches.group(2)
             id_ = matches.group(3)
@@ -55,6 +54,7 @@ class HBNBCommand(cmd.Cmd):
     def class_method_(self, line):
         """ <class>.<method>
         """
+        print("entro al update dict")
         matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(update)\(([^,]*),?\s?({.+})\)', line)
         if matches:
             classes = matches.group(1)
@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         objects = storage.all()
-        key_search = args_[0] + '.' + args_[1]
+        key_search = args_[0] + '.' + args_[1].strip('"')
         if key_search not in objects:
             print("** no instance found **")
             return
