@@ -22,11 +22,10 @@ class HBNBCommand(cmd.Cmd):
         if self.count_instances(line):
             return
 
-        if not self.class_method_(line):
-            return
 
         matches = re.search(r'(User|BaseModel|Place|City|Amenity|Review|State).(all|show|destroy|create|all|update)\(([^,]*),?\s?([^,]*),?\s?([^,]*)\)', line)
         if matches:
+            print("entro aquii")
             classes = matches.group(1)
             command = matches.group(2)
             id_ = matches.group(3)
@@ -34,6 +33,9 @@ class HBNBCommand(cmd.Cmd):
             att_value = matches.group(5)
             self.onecmd(command + " " + classes + " " +  id_ + " " + att_ + " " + att_value)
             return
+        if not self.class_method_(line):
+            return
+
 
     def count_instances(self, line):
         """count instances
@@ -43,12 +45,12 @@ class HBNBCommand(cmd.Cmd):
         if matches:
             count = 0
             classes = matches.group(1)
-            for k, v in FileStorage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if classes in k:
                     count = count + 1
             print(count)
-            return 0
-        return 1
+            return 1
+        return 0
 
     def class_method_(self, line):
         """ <class>.<method>
