@@ -65,7 +65,6 @@ class HBNBCommand(cmd.Cmd):
     def class_method_(self, line):
         """ <class>.<method>
         """
-        print("entro al update dict")
         matches = re.search(
             r'(User|BaseModel|Place|City|Amenity|Review|State).(update)\(([^,]*),?\s?({.+})\)',
             line)
