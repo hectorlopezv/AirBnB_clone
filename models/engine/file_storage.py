@@ -43,43 +43,7 @@ class FileStorage:
                    "Review": Review}
         return classes
 
-    def attributes(self):
-        """Returns the valid attributes and their types for classname."""
-        attributes = {
-            "BaseModel":
-            {"id": str,
-             "created_at": datetime,
-             "updated_at": datetime},
-            "User":
-            {"email": str,
-             "password": str,
-             "first_name": str,
-             "last_name": str},
-            "State":
-            {"name": str},
-            "City":
-            {"state_id": str,
-             "name": str},
-            "Amenity":
-            {"name": str},
-            "Place":
-            {"city_id": str,
-             "user_id": str,
-             "name": str,
-             "description": str,
-             "number_rooms": int,
-             "number_bathrooms": int,
-             "max_guest": int,
-             "price_by_night": int,
-             "latitude": float,
-             "longitude": float,
-             "amenity_ids": list},
-            "Review":
-            {"place_id": str,
-             "user_id": str,
-             "text": str}
-        }
-        return attributes
+
 
     def reload(self):
         """json to -> _FileStorage__objects"""
