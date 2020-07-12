@@ -1,0 +1,41 @@
+.Places
+{
+
+}
+.Places h1
+{
+    margin-top:50px;
+    display:block;
+    font-size:30px;
+}
+.r1
+{
+    width: 390px;
+    padding:20px;
+    margin:20px;
+    text-align: center;
+    border-radius: 4px;
+}
+.r1 col 
+{
+    margin-left: 25px;
+}
+.r1 h2
+{
+    font-size: 26px;
+    margin: 0;
+}
+.r2
+{
+    margin-left: 250px;
+}
+
+article
+{
+    margin-top: 5px;
+}
+article .col 
+{
+    border: 1px solid #FF5A5F;
+  
+}

@@ -1,3 +1,10 @@
+
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 body
 {
 
@@ -6,21 +13,72 @@ body
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
     color: #484848;
+    
 
 }
 
 .container
 {
-    max-width: 1000px;
+    width: 1000px;
     margin: 30px auto;
+    position: relative;
+
 }
 
 
-.clearfix{ zoom: 1;}
-.clearfix:after{
-    content: '.';
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  GROUPING  ============================================================================= */
+
+.row {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+.row:before,
+.row:after {
+    content:"";
+    display:table;
+}
+.row:after {
+    clear:both;
+}
+
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+
+.col:first-child { /*margin-left: 0;*/ } /* all browsers except IE6 and lower */
+
+
+.span-3-of-3 {
+	width: 100%; 
+}
+
+.span-2-of-3 {
+	width: 66.13%; 
+}
+
+.span-1-of-3 {
+	width: 32.26%; 
+}
+
+
+.span-2-of-2 {
+	width: 100%;
+}
+
+.span-1-of-2 {
+	width: 49.2%;
 }
